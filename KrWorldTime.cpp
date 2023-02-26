@@ -6,7 +6,7 @@
 
 using namespace std::chrono_literals;
 
-namespace Kronos::WorldTime
+namespace Kronos::KrWorldTime
 {
     // morning / afternoon / evening
     // 8mins   / 8mins     / 8mins          -> 24 mins per day (1 hour == 1 minute)
@@ -24,15 +24,15 @@ namespace Kronos::WorldTime
 
     double t = 0.0;
 
-    const double get(){
+    const double Get(){
         return t;
     }
 
-    void increment(const double dt){
+    void Tick(const double dt){
         t+=dt;
     }
 
-    const void output(){
+    const void Output(){
         unsigned int tRounded = std::round(t);
         unsigned int seconds = (unsigned int)(second(1ms).count()*tRounded) % HOUR;
         unsigned int hours = (unsigned int)(hour(1ms).count()*t) % DAY;
@@ -41,7 +41,7 @@ namespace Kronos::WorldTime
         std::cout << years << ":" << days << ":" << hours << ":" << seconds << " " << std::flush; 
     }
 
-    const void outputInfo(){
+    const void OutputInfo(){
         std::cout << 1.0 / year(1ms).count() << " real milliseconds per game year" << std::endl;
         std::cout << 1.0 / year(1s).count() << " real seconds per game year" << std::endl;
         std::cout << 1.0 / year(1min).count() << " real minutes per game year" << std::endl;
