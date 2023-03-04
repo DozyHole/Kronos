@@ -1,6 +1,5 @@
 #include "KrWorldTime.h"
 #include <iostream>
-#include <chrono>
 #include <thread>
 #include <cmath>
 
@@ -8,25 +7,9 @@ using namespace std::chrono_literals;
 
 namespace Kronos::KrWorldTime
 {
-    using Clock = std::chrono::steady_clock;
-
-    // morning / afternoon / evening
-    // 8mins   / 8mins     / 8mins          -> 24 mins per day (1 hour == 1 minute)
-    // 12 days a year
-
-    const short SECOND = 1;     // 1 second is 1 second
-    const short HOUR = 60;      // 1 hour is 60 seconds
-    const short DAY = 24;       // 1 day is 24 hours
-    const short YEAR = 12;      // 1 year is 12 days 
-
-    using second = std::chrono::duration<long long, std::ratio<SECOND>>;
-    using hour = std::chrono::duration<long long, std::ratio<second::period::num * HOUR>>;
-    using day = std::chrono::duration<long long, std::ratio<hour::period::num * DAY>>;
-    using year = std::chrono::duration<long long, std::ratio<day::period::num * YEAR>>;
-
     std::chrono::time_point<Clock> tp = {};
   
-    const double Get(){
+    double Get(){
         return tp.time_since_epoch().count();
     }
 
@@ -41,7 +24,7 @@ namespace Kronos::KrWorldTime
         tp += std::chrono::microseconds{ms};
     }
 
-    const void Output(){
+    void Output(){
         auto tpcMilliSeconds = std::chrono::time_point_cast<std::chrono::milliseconds>(tp);
         auto tpcSeconds = std::chrono::time_point_cast<second>(tp);
         auto tpcHours = std::chrono::time_point_cast<hour>(tp);
@@ -61,7 +44,7 @@ namespace Kronos::KrWorldTime
         std::cout << cs << std::endl;
     }
 
-    const void OutputInfo(){
+    void OutputInfo(){
         auto gameHourToRealMinutes = std::chrono::duration_cast<std::chrono::minutes>(hour(1));
         std::cout << "1 game Hour: " << gameHourToRealMinutes.count() << " minutes" << std::endl;
 
