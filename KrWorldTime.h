@@ -20,8 +20,6 @@ namespace Kronos::KrWorldTime
     using dur_day       = std::chrono::duration<long long, std::ratio<dur_hour::period::num * DAY>>;
     using dur_year      = std::chrono::duration<long long, std::ratio<dur_day::period::num * YEAR>>;
 
-    //auto tpcSeconds = std::chrono::time_point_cast<dur_second>(tp);
-
     std::chrono::time_point<Clock> GetTimePoint(unsigned int years, unsigned int days, unsigned int hours, unsigned int seconds);
     double  Get();
     void    Tick(const double dt);
