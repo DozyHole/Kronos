@@ -5,26 +5,29 @@
 namespace Kronos::KrWorldTime
 {
     using Clock = std::chrono::steady_clock;
-
+    using TimePoint = std::chrono::time_point<Clock>;
     // morning / afternoon / evening
     // 8mins   / 8mins     / 8mins          -> 24 mins per day (1 hour == 1 minute)
     // 12 days a year
 
-    const short SECOND = 1;     // 1 second is 1 second
-    const short HOUR = 60;      // 1 hour is 60 seconds
-    const short DAY = 24;       // 1 day is 24 hours
-    const short YEAR = 12;      // 1 year is 12 days 
+    const short SECOND  = 1;        // 1 second is 1 second
+    const short HOUR    = 60;       // 1 hour is 60 seconds
+    const short DAY     = 24;       // 1 day is 24 hours
+    const short YEAR    = 12;       // 1 year is 12 days 
 
-    using second = std::chrono::duration<long long, std::ratio<SECOND>>;
-    using hour = std::chrono::duration<long long, std::ratio<second::period::num * HOUR>>;
-    using day = std::chrono::duration<long long, std::ratio<hour::period::num * DAY>>;
-    using year = std::chrono::duration<long long, std::ratio<day::period::num * YEAR>>;
+    using dur_second    = std::chrono::duration<long long, std::ratio<SECOND>>;
+    using dur_hour      = std::chrono::duration<long long, std::ratio<dur_second::period::num * HOUR>>;
+    using dur_day       = std::chrono::duration<long long, std::ratio<dur_hour::period::num * DAY>>;
+    using dur_year      = std::chrono::duration<long long, std::ratio<dur_day::period::num * YEAR>>;
 
-    double Get();
-    void Tick(const double dt);
-    void Output();
-    double Get(unsigned int year, unsigned int day, unsigned int hour, unsigned int seconds);
-    void OutputInfo();
+    //auto tpcSeconds = std::chrono::time_point_cast<dur_second>(tp);
+
+    std::chrono::time_point<Clock> GetTimePoint(unsigned int years, unsigned int days, unsigned int hours, unsigned int seconds);
+    double  Get();
+    void    Tick(const double dt);
+    double  Get(unsigned int year, unsigned int day, unsigned int hour, unsigned int seconds);
+    void    Output();
+    void    OutputInfo();
 };
 
 #endif
